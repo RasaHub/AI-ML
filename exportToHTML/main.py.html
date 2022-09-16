@@ -1,0 +1,76 @@
+<html>
+<head>
+<title>main.py</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cc7832;}
+.s1 { color: #a9b7c6;}
+.s2 { color: #6897bb;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+main.py</font>
+</center></td></tr></table>
+<pre><span class="s0">import </span><span class="s1">sys</span>
+<span class="s0">import </span><span class="s1">pygame</span>
+<span class="s0">import </span><span class="s1">pymunk</span>
+
+<span class="s0">def </span><span class="s1">create_apple(space):</span>
+    <span class="s1">body = pymunk.Body(</span><span class="s2">1</span><span class="s0">,</span><span class="s2">100</span><span class="s0">,</span><span class="s1">body_type = pymunk.Body.DYNAMIC)</span>
+    <span class="s1">body.position = (</span><span class="s2">400</span><span class="s0">,</span><span class="s2">0</span><span class="s1">)</span>
+    <span class="s1">shape = pymunk.Circle(body</span><span class="s0">,</span><span class="s2">80</span><span class="s1">)</span>
+    <span class="s1">space.add(body</span><span class="s0">, </span><span class="s1">shape)</span>
+    <span class="s0">return </span><span class="s1">shape</span>
+
+<span class="s0">def </span><span class="s1">draw_apples(apples):</span>
+    <span class="s0">for </span><span class="s1">apple </span><span class="s0">in </span><span class="s1">apples:</span>
+        <span class="s1">pos_x = int(apple.body.position.x)</span>
+        <span class="s1">pos_y = int(apple.body.position.y)</span>
+        <span class="s1">pygame.draw.circle(screen</span><span class="s0">,</span><span class="s1">(</span><span class="s2">0</span><span class="s0">,</span><span class="s2">0</span><span class="s0">,</span><span class="s2">0</span><span class="s1">)</span><span class="s0">,</span><span class="s1">(pos_x</span><span class="s0">,</span><span class="s1">pos_y)</span><span class="s0">,</span><span class="s2">80</span><span class="s1">)</span>
+
+<span class="s0">def </span><span class="s1">statics_ball(space):</span>
+    <span class="s1">body = pymunk.Body(body_type=pymunk.Body.STATIC)</span>
+    <span class="s1">body.position = (</span><span class="s2">500</span><span class="s0">,</span><span class="s2">500</span><span class="s1">)</span>
+    <span class="s1">shape = pymunk.Circle(body</span><span class="s0">,</span><span class="s2">50</span><span class="s1">)</span>
+    <span class="s1">space.add(body</span><span class="s0">,</span><span class="s1">shape)</span>
+    <span class="s0">return </span><span class="s1">shape</span>
+
+<span class="s0">def </span><span class="s1">draw_static_ball(space):</span>
+    <span class="s0">for </span><span class="s1">ball </span><span class="s0">in </span><span class="s1">balls:</span>
+        <span class="s1">pos_x = int(ball.body.position.x)</span>
+        <span class="s1">pos_y = int(ball.body.position.y)</span>
+        <span class="s1">pygame.draw.circle(screen</span><span class="s0">,</span><span class="s1">(</span><span class="s2">0</span><span class="s0">,</span><span class="s2">0</span><span class="s0">,</span><span class="s2">0</span><span class="s1">)</span><span class="s0">,</span><span class="s1">(pos_x</span><span class="s0">,</span><span class="s1">pos_y)</span><span class="s0">,</span><span class="s2">50</span><span class="s1">)</span>
+
+
+<span class="s1">pygame.init()</span>
+<span class="s1">screen = pygame.display.set_mode((</span><span class="s2">800</span><span class="s0">,</span><span class="s2">800</span><span class="s1">))</span>
+<span class="s1">clock = pygame.time.Clock()</span>
+<span class="s1">space = pymunk.Space()</span>
+<span class="s1">space.gravity = (</span><span class="s2">0</span><span class="s0">,</span><span class="s2">80</span><span class="s1">)</span>
+
+<span class="s1">apples = []</span>
+<span class="s1">apples.append(create_apple(space))</span>
+
+
+<span class="s1">balls = []</span>
+<span class="s1">balls.append(statics_ball(space))</span>
+
+
+<span class="s0">while True</span><span class="s1">:</span>
+    <span class="s0">for </span><span class="s1">event </span><span class="s0">in </span><span class="s1">pygame.event.get():</span>
+        <span class="s0">if </span><span class="s1">event.type == pygame.QUIT:</span>
+            <span class="s1">pygame.quit()</span>
+            <span class="s1">sys.exit()</span>
+
+    <span class="s1">screen.fill((</span><span class="s2">217</span><span class="s0">,</span><span class="s2">217</span><span class="s0">,</span><span class="s2">217</span><span class="s1">))</span>
+    <span class="s1">draw_apples(apples)</span>
+    <span class="s1">draw_static_ball(balls)</span>
+    <span class="s1">space.step(</span><span class="s2">1</span><span class="s1">/</span><span class="s2">50</span><span class="s1">)</span>
+    <span class="s1">pygame.display.update()</span>
+    <span class="s1">clock.tick(</span><span class="s2">120</span><span class="s1">)</span>
+</pre>
+</body>
+</html>
